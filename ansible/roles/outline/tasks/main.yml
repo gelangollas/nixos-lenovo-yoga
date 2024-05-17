@@ -18,3 +18,8 @@
   ansible.builtin.shell: go build -C /tmp/ansible/outline/x/examples/outline-cli -o {{ outline_artifact_path }} .
   args:
     creates: "{{ outline_artifact_path }}"
+- name: Create DNS file so outline can back it up
+  become: true
+  ansible.builtin.file:
+    path: /etc/resolv.conf.head
+    state: touch
