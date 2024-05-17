@@ -1,0 +1,37 @@
+- name: Setup OpenSUSE
+  hosts: desktop
+  tasks:
+  - name: Speed up zypper
+    become: true
+    copy: 
+      src: ../configs/zypper.conf 
+      dest: /etc/zypp/zypper.conf
+  - name: Install basic tools
+    become: true
+    community.general.zypper:
+      name:
+      - curl
+      - telnet
+      - wget
+      - htop
+      - golang
+      - make
+      - git-core
+      state: latest
+  - name: Install drivers
+    become: true
+    community.general.zypper:
+      name:
+      - sof-firmware
+      state: latest
+  - name: Install Hyprland
+    become: true
+    community.general.zypper:
+      name:
+      - hyprland
+      - kitty
+      state: latest
+  - name: Hyprland config
+    copy: 
+      src: ../configs/hyprland.conf 
+      dest: ~/.config/hypr/hyprland.conf
