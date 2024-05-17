@@ -1,0 +1,11 @@
+  - name: Install Hyprland
+    become: true
+    community.general.zypper:
+      name:
+      - hyprland
+      - kitty
+      state: latest
+  - name: Hyprland config
+    copy: 
+      src: hyprland.conf 
+      dest: ~/.config/hypr/hyprland.conf

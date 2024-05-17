@@ -4,7 +4,7 @@
   - name: Speed up zypper
     become: true
     copy: 
-      src: ../configs/zypper.conf 
+      src: ./configs/zypper.conf 
       dest: /etc/zypp/zypper.conf
   - name: Install basic tools
     become: true
@@ -14,7 +14,6 @@
       - telnet
       - wget
       - htop
-      - golang
       - make
       - git-core
       state: latest
@@ -24,14 +23,9 @@
       name:
       - sof-firmware
       state: latest
-  - name: Install Hyprland
-    become: true
-    community.general.zypper:
-      name:
-      - hyprland
-      - kitty
-      state: latest
-  - name: Hyprland config
-    copy: 
-      src: ../configs/hyprland.conf 
-      dest: ~/.config/hypr/hyprland.conf
+  - name: Setup Hyprland
+    include_role:
+      name: hyprland
+  - name: Setup Outline
+    include_role:
+      name: outline
