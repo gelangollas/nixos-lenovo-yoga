@@ -1,0 +1,31 @@
+- name: Install outline VPN client
+  hosts: all
+  vars:
+    outline_artifact_path: /bin/outline-cli
+  tasks:
+  - name: Install Dependencies
+    become: true
+    community.general.zypper:
+      name:
+      - golang
+      state: latest
+  - name: Check in already installed
+    stat:
+      path: "{{ outline_artifact_path }}"
+    register: file_status
+  - name: Clone git repo 
+    ansible.builtin.git:
+      repo: https://github.com/Jigsaw-Code/outline-sdk.git
+      dest: /tmp/ansible/outline
+    when: not file_status.stat.exists
+  - name: Build outline client
+    become: true
+    ansible.builtin.shell: go build -C /tmp/ansible/outline/x/examples/outline-cli -o {{ outline_artifact_path }} .
+    args:
+      creates: "{{ outline_artifact_path }}"
+  - name: Ensure DNS file exists so outline can back it up
+    become: true
+    copy:
+      content: ""
+      dest: /etc/resolv.conf.head
+      force: false

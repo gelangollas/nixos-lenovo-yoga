@@ -4,8 +4,8 @@
   - name: Speed up zypper
     become: true
     copy: 
-      src: ./configs/zypper.conf 
-      dest: /etc/zypp/zypper.conf
+      src: ./configs/zypp.conf 
+      dest: /etc/zypp/zypp.conf
   - name: Install basic tools
     become: true
     community.general.zypper:
@@ -23,9 +23,3 @@
       name:
       - sof-firmware
       state: latest
-  - name: Setup Hyprland
-    include_role:
-      name: hyprland
-  - name: Setup Outline
-    include_role:
-      name: outline
