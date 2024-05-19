@@ -16,10 +16,14 @@
       - htop
       - make
       - git-core
-      state: latest
+      state: present
   - name: Install drivers
     become: true
     community.general.zypper:
       name:
       - sof-firmware
-      state: latest
+      state: present
+  - name: Wayland for electron apps
+    copy: 
+      src: files/electron-flags.conf 
+      dest: ~/.config/electron-flags.conf

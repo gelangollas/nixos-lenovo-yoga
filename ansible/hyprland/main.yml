@@ -1,11 +1,40 @@
-  - name: Install Hyprland
+# TODO try screen sharing
+# TODO try ulauncher
+# TODO setup waybar
+# TODO setup hyprcursor
+# https://github.com/hyprland-community/awesome-hyprland
+# https://wiki.archlinux.org/title/Hyprland
+
+- name: Setup Hyprland
+  hosts: all
+  vars:
+    monitor: eDP-1
+  tasks:
+  - name: Install Hyprland deps
     become: true
     community.general.zypper:
       name:
-      - hyprland
-      - kitty
-      state: latest
-  - name: Hyprland config
-    copy: 
-      src: hyprland.conf 
+      - hyprland  # itself
+      - kitty # terminal
+      - hyprpaper # wallpaper manager
+      - waybar  # status bar
+      - dunst # notification manager
+      - wofi  # app launcher
+      # for screen sharing
+      - pipewire
+      - wireplumber
+      - xdg-desktop-portal-hyprland
+      # authentication agent
+      # - polkit-kde-agent  # TOO verify https://wiki.hyprland.org/Useful-Utilities/Must-have/#authentication-agent
+      # QT support
+      # - qt5-wayland
+      - qt6-wayland
+      state: present
+  - name: Hyprland configs
+    ansible.builtin.template:
+      src: files/hyprland.conf 
       dest: ~/.config/hypr/hyprland.conf
+  - name: Hyprpaper config
+    ansible.builtin.template:
+      src: files/hyprpaper.conf 
+      dest: ~/.config/hypr/hyprpaper.conf

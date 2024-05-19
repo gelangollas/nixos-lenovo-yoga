@@ -38,4 +38,3 @@
       - google-chrome-stable
       - MozillaFirefox
       state: present
-
