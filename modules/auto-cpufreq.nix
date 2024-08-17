@@ -1,4 +1,4 @@
-{inputs, pkgs, ...}: {
+{ inputs, pkgs, ... }: {
     programs.auto-cpufreq.enable = true;
     programs.auto-cpufreq.settings = {
       battery = {
