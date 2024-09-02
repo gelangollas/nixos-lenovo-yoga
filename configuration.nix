@@ -9,6 +9,7 @@
     [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
       ./modules/auto-cpufreq.nix
+      ./modules/hardware.nix
     ];
 
   # Bootloader.
@@ -90,13 +91,6 @@
     ];
   };
 
-  home-manager.users.fergy = {
-    dconf = {
-      enable = true;
-      settings."org/gnome/desktop/interface".color-scheme = "prefer-dark";
-    };
-  };
-
   programs.firefox.enable = true;
   programs.git = {
     enable = true;
@@ -107,6 +101,8 @@
 
   environment.systemPackages = with pkgs; [
     brave
+    qbittorrent
+    vlc
     vim
     wget
     curl
